@@ -1,1 +1,1 @@
-Roguelike based off tutorial from http://rogueliketutorials.com/
+Roguelike based off tutorial from [Roguelike Tutorials](http://rogueliketutorials.com/) using [python-tcod](https://github.com/libtcod/python-tcod).
