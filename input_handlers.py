@@ -1,9 +1,22 @@
 import tcod as libtcod
 
-def handle_keys(key):
+from game_states import GameStates
+
+
+def handle_keys(key, game_state):
+    if game_state == GameStates.PLAYER_TURN:
+        return handle_player_turn_keys(key)
+    elif game_state == GameStates.PLAYER_DEAD:
+        return handle_player_dead_keys(key)
+    elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
+        return handle_inventory_keys(key)
+        
+    return {}
+
+def handle_player_turn_keys(key):
     key_char = chr(key.c)
 
-    # Arrow keys/HJKL and YUBN: movement
+    # Arrow keys/hjkl and yubn: movement
     if key.vk == libtcod.KEY_UP or key_char == 'k':
         return {'move': (0, -1)}
     elif key.vk == libtcod.KEY_DOWN or key_char == 'j':
@@ -21,14 +34,56 @@ def handle_keys(key):
     elif key_char == 'n':
         return{'move': (1, 1)}
 
-    if key.vk == libtcod.KEY_ENTER and key.lalt:
-        # Alt + Enter: toggle full screen
-        return {'fullscreen': True}
+    # g: Pick up item
+    elif key_char == 'g':
+        return {'pickup': True}
 
+    # i: Show inventory
+    elif key_char == 'i':
+        return {'show_inventory': True}
+
+    # d: Drop inventory
+    elif key_char == 'd':
+        return {'drop_inventory': True}
+    
+    # Alt + Enter: toggle full screen
+    elif key.vk == libtcod.KEY_ENTER and key.lalt:
+        return {'fullscreen': True}
+   
+    # Escape: exit game
     elif key.vk == libtcod.KEY_ESCAPE:
-        # Escape: exit game
         return {'exit': True}
 
-    # No key pressed
     return{}
     
+def handle_inventory_keys(key):
+    index = key.c - ord('a')
+
+    if index >= 0:
+        return{'inventory_index': index}
+
+    # Alt + Enter: toggle full screen
+    if key.vk == libtcod.KEY_ENTER and key.lalt:
+        return {'fullscreen': True}
+
+    # Escape: exit menu
+    elif key.vk == libtcod.KEY_ESCAPE:
+        return {'exit': True}
+
+    return {}
+
+def handle_player_dead_keys(key):
+    key_char = chr(key.c)
+
+    if key_char == 'i':
+        return {'show_inventory': True}
+
+    # Alt + Enter: toggle full screen
+    if key.vk == libtcod.KEY_ENTER and key.lalt:
+        return {'fullscreen': True}
+    
+    # Escape: exit menu
+    elif key.vk == libtcod.KEY_ESCAPE:
+        return {'exit': True}
+    
+    return {}
