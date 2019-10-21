@@ -10,3 +10,5 @@ class Tile:
             block_site = blocked
         
         self.block_sight = block_site
+
+        self.explored = False
