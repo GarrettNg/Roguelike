@@ -120,8 +120,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                     libtcod.console_clear(con)
 
                     break
-                else:
-                    message_log.add_message(Message('There are no stairs here.', libtcod.yellow))
+            else:
+                message_log.add_message(Message('There are no stairs here.', libtcod.yellow))
 
         if level_up:
             if level_up == 'hp':
@@ -305,6 +305,7 @@ def main():
             new_game = action.get('new_game')
             load_saved_game = action.get('load_game')
             exit_game = action.get('exit')
+            fullscreen = action.get('fullscreen')
 
             if show_load_error_message and (new_game or load_saved_game or exit_game):
                 show_load_error_message = False
@@ -319,6 +320,8 @@ def main():
                     show_main_menu = False
                 except FileNotFoundError:
                     show_load_error_message = True
+            if fullscreen:
+                libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
             elif exit_game:
                 break
 
