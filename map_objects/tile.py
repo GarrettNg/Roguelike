@@ -1,7 +1,7 @@
 class Tile:
-    '''
+    """
     A tile on a map. It can be blocked or can block line of sight.
-    '''
+    """
     def __init__(self, blocked, block_sight=None):
         self.blocked = blocked
 
