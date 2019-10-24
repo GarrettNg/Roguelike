@@ -61,7 +61,7 @@ class Inventory:
             self.owner.equipment.toggle_equip(item)
 
         item.x = self.owner.x
-        item.y = self.owner.yellow
+        item.y = self.owner.y
         
         self.remove_item(item)
         results.append({'item_dropped': item, 'message': Message(
