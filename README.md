@@ -6,6 +6,7 @@ This is an ASCII-style game similar to [Nethack](https://github.com/NetHack/NetH
 | ----------- | ------------- |
 | Movement | Arrow Keys or h, j, k, l (diagonals: y, u, b, n) |
 | Wait | z |
+| Descend stairs | Enter |
 | Inventory | i |
 | Pick up item | g |
 | Drop item | d |
